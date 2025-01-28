@@ -5,19 +5,34 @@ function insertCounterButton() {
 
   const button = document.createElement('div');
   button.id = 'tree-counter-button';
-  button.innerHTML = `
-    <div id="counter-container">
-      <img src="${imageUrl}" alt="Tree Icon">
-      <span id="tree-counter-text">0</span>
-    </div>
-    <div id="progress-container">
-      <div id="progress-bar"></div>
-    </div>
-  `;
+
+  const counterContainer = document.createElement('div');
+  counterContainer.id = 'counter-container';
+
+  const icon = document.createElement('img');
+  icon.src = imageUrl;
+  icon.alt = 'Tree Icon';
+
+  const treeCounterText = document.createElement('span');
+  treeCounterText.id = 'tree-counter-text';
+  treeCounterText.textContent = '0';
+
+  counterContainer.appendChild(icon);
+  counterContainer.appendChild(treeCounterText);
+
+  const progressContainer = document.createElement('div');
+  progressContainer.id = 'progress-container';
+
+  const progressBar = document.createElement('div');
+  progressBar.id = 'progress-bar';
+  progressContainer.appendChild(progressBar);
+
+  button.appendChild(counterContainer);
+  button.appendChild(progressContainer);
 
   const targetElement = document.querySelector('.notifications.main-header__notifications') 
     || document.querySelector('.main-nav.main-header__nav');
-  
+
   if (targetElement) {
     targetElement.parentNode.insertBefore(button, targetElement);
   }
@@ -25,32 +40,51 @@ function insertCounterButton() {
   const popover = document.createElement('div');
   popover.id = 'tree-counter-popover';
   popover.classList.add('hidden');
-  popover.innerHTML = `
-    <div class="popover-content">
-      <li class="popover-info divider-bottom">
-        <span class="popover-section-text">Details</span>
-        <ul>
-          <li>
-            <span class="popover-data-text">Tree counter:</span>
-            <span id="tree-counter-text">0</span>
-          </li>
-          <li>
-            <span class="popover-data-text">Search counter:</span>
-            <span id="search-counter-text">0</span>
-            <span>(ad present)</span>
-          </li>
-        </ul>
-      </li>
-      <li class="popover-warning">
-        <span class="popover-section-text">Warning</span>
-        <ul>
-          <li>
-            <span>Trees planted counter is an approximation, the real number may vary dramatically from Ecosia's expenditure.</span>
-          </li>
-        </ul>
-      </li>
-    </div>
-  `;
+
+  const popoverContent = document.createElement('div');
+  popoverContent.classList.add('popover-content');
+
+  const details = document.createElement('li');
+  details.classList.add('popover-info', 'divider-bottom');
+  
+  const detailsText = document.createElement('span');
+  detailsText.classList.add('popover-section-text');
+  detailsText.textContent = 'Details';
+  
+  const detailsList = document.createElement('ul');
+  
+  const treeCountItem = document.createElement('li');
+  treeCountItem.innerHTML = `<span class="popover-data-text">Tree counter:</span> <span id="tree-counter-text">0</span>`;
+  
+  const searchCountItem = document.createElement('li');
+  searchCountItem.innerHTML = `<span class="popover-data-text">Search counter:</span> <span id="search-counter-text">0</span> <span>(ad present)</span>`;
+  
+  detailsList.appendChild(treeCountItem);
+  detailsList.appendChild(searchCountItem);
+  details.appendChild(detailsText);
+  details.appendChild(detailsList);
+
+  popoverContent.appendChild(details);
+
+  const warning = document.createElement('li');
+  warning.classList.add('popover-warning');
+
+  const warningText = document.createElement('span');
+  warningText.classList.add('popover-section-text');
+  warningText.textContent = 'Warning';
+
+  const warningList = document.createElement('ul');
+
+  const warningItem = document.createElement('li');
+  warningItem.textContent = 'Trees planted counter is an approximation, the real number may vary dramatically from Ecosia\'s expenditure.';
+
+  warningList.appendChild(warningItem);
+  warning.appendChild(warningText);
+  warning.appendChild(warningList);
+
+  popoverContent.appendChild(warning);
+
+  popover.appendChild(popoverContent);
   document.body.appendChild(popover);
 
   button.addEventListener('click', (event) => {
