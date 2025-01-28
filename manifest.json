@@ -9,6 +9,11 @@
   "host_permissions": [
     "*://www.ecosia.org/*"
   ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{66B44C08-DD99-11EF-8E24-88EC9734574D}"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["*://www.ecosia.org/*"],
